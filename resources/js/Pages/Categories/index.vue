@@ -8,6 +8,8 @@ export default {
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Link, router } from '@inertiajs/vue3';
 import { Inertia } from '@inertiajs/inertia';
+import Pagination from '@/Components/Pagination.vue';
+
 defineProps({
   categories: {
     type: Object,
@@ -82,29 +84,8 @@ const goToPage = url => {
             </div>
 
             <div class="px-4 py-2 bg-white border-t border-gray-200 divide-y-2 divide-gray-200 rounded-b-lg">
-              <div class="flex justify-center mt-4 space-x-2" v-if="categories.links">
-                <button
-                  :class="['flex', 'items-center', 'px-3', 'py-2', 'text-gray-700', 'bg-gray-200', 'rounded-full', 'hover:bg-gray-300', !categories.prev_page_url ? 'bg-blue-900 text-white' : 'text-gray-700 bg-gray-200 hover:bg-gray-300']"
-                  @click="goToPage(categories.links[0].url)">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                  </svg>
-                </button>
-                <button v-for="link in categories.links.slice(1, -1)" :key="link.label" :class="[
-                  'px-4 py-2 rounded-full',
-                  link.active ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700',
-                  'hover:bg-gray-300 transition'
-                ]" @click="goToPage(link.url)" v-html="link.label">
-                </button>
-                <button
-                  :class="['flex', 'items-center', 'px-3', 'py-2', 'text-gray-700', 'bg-gray-200', 'rounded-full', !categories.next_page_url ? 'bg-blue-900 text-white' : 'text-gray-700 bg-gray-200 hover:bg-gray-300']"
-                  @click="goToPage(categories.links[categories.links.length - 1].url)" :disabled="!categories.next_page_url ? true : false">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
+              <div class="mt-4 space-x-2" v-if="categories.links">
+                <Pagination :data="categories" />                
               </div>
             </div>
           </div>
