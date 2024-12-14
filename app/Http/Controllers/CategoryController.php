@@ -9,12 +9,13 @@ use Inertia\Response;
 
 class CategoryController extends Controller
 {
+    const NUM_PAGES_PAGINATION = 3;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {        
-        $categories = Category::paginate(3);
+        $categories = Category::paginate(self::NUM_PAGES_PAGINATION);
         return inertia('Categories/index', ['categories' => $categories]);
     }
 

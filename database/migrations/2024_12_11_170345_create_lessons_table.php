@@ -17,7 +17,8 @@ return new class extends Migration
             $table->text('description')->max(400);
             $table->string('image_uri', 255)->nullable();
             $table->string('content_uri', 255); 
-            $table->string('pdf_uri', 255);            
+            $table->string('pdf_uri', 255);
+            $table->boolean('is_free')->default(false);
             $table->timestamps();
             $table->foreignId('level_id')->constrained();
         });
