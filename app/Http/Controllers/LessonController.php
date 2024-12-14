@@ -12,7 +12,8 @@ class LessonController extends Controller
      */
     public function index()
     {
-        //
+        $lessons = Lesson::paginate(3);
+        return inertia('Lessons/index', ['lessons' => $lessons]);
     }
 
     /**
