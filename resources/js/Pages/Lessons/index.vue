@@ -47,7 +47,7 @@ const props = defineProps({
                         </div>
 
                         <div class="px-4 py-2 bg-white border-t border-gray-200 divide-y-2 divide-gray-200 rounded-b-lg"
-                            v-if="lessons.has_more_pages">
+                            v-if="lessons.last_page > 1">
                             <div class="mt-4 space-x-2">
                                 <Pagination :data="lessons" />
                             </div>

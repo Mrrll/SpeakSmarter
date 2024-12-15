@@ -53,8 +53,8 @@ const goToPage = url => {
               </Table>
             </div>
 
-            <div class="px-4 py-2 bg-white border-t border-gray-200 divide-y-2 divide-gray-200 rounded-b-lg">
-              <div class="mt-4 space-x-2" v-if="categories.has_more_pages">
+            <div class="px-4 py-2 bg-white border-t border-gray-200 divide-y-2 divide-gray-200 rounded-b-lg">              
+              <div class="mt-4 space-x-2" v-if="categories.last_page > 1">
                 <Pagination :data="categories" />
               </div>
             </div>

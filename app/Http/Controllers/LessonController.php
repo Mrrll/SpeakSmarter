@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Lesson;
+use App\Models\Level;
 use Illuminate\Http\Request;
 
 class LessonController extends Controller
 {
+    const NUM_PAGES_PAGINATION = 3;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $lessons = Lesson::paginate(3);
+        $lessons = Lesson::paginate(self::NUM_PAGES_PAGINATION);
         return inertia('Lessons/index', ['lessons' => $lessons]);
     }
 
@@ -21,7 +24,9 @@ class LessonController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        $levels = Level::all();
+        return inertia('Lessons/create', ['categories' => $categories, 'levels' => $levels]);
     }
 
     /**
@@ -29,7 +34,12 @@ class LessonController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            Lesson::create($request->validated());
+            return redirect()->route('lessons.index')->with('success', 'Create lesson satisfaction.');
+        } catch (\Throwable $e) {
+            return back()->with('error', 'Create lesson crash.');
+        }
     }
 
     /**
@@ -45,7 +55,7 @@ class LessonController extends Controller
      */
     public function edit(Lesson $lesson)
     {
-        //
+        return inertia('Lessons/edit', ['lesson' => $lesson]);
     }
 
     /**
@@ -53,7 +63,12 @@ class LessonController extends Controller
      */
     public function update(Request $request, Lesson $lesson)
     {
-        //
+        try {
+            $lesson->update($request->validated());
+            return redirect()->route('lessons.index')->with('success', 'Update lesson satisfaction.');
+        } catch (\Throwable $e) {
+            return back()->with('error', 'Update lesson crash.');
+        }
     }
 
     /**
@@ -61,6 +76,11 @@ class LessonController extends Controller
      */
     public function destroy(Lesson $lesson)
     {
-        //
+        try {
+            $lesson->delete();
+            return redirect()->route('lessons.index')->with('success', 'Delete lesson satisfaction.');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Delete lesson crash.');
+        }
     }
 }
